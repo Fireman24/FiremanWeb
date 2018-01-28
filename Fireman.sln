@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiremanWin", "FiremanWin\FiremanWin.csproj", "{F3306726-9B8B-41AB-92E1-AA904252E863}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiremanWpf", "FiremanWpf\FiremanWpf.csproj", "{289E6CC7-2411-4811-815E-E3BC1574BD72}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FiremanApi2", "FiremanApi2\FiremanApi2.csproj", "{0858E25C-7276-4CCE-8B33-9C4B07F78E8F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3306726-9B8B-41AB-92E1-AA904252E863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3306726-9B8B-41AB-92E1-AA904252E863}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3306726-9B8B-41AB-92E1-AA904252E863}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3306726-9B8B-41AB-92E1-AA904252E863}.Release|Any CPU.Build.0 = Release|Any CPU
+		{289E6CC7-2411-4811-815E-E3BC1574BD72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{289E6CC7-2411-4811-815E-E3BC1574BD72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{289E6CC7-2411-4811-815E-E3BC1574BD72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{289E6CC7-2411-4811-815E-E3BC1574BD72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0858E25C-7276-4CCE-8B33-9C4B07F78E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0858E25C-7276-4CCE-8B33-9C4B07F78E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0858E25C-7276-4CCE-8B33-9C4B07F78E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0858E25C-7276-4CCE-8B33-9C4B07F78E8F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {490473A7-C5E5-41A0-9387-3C7C12F69AB2}
+	EndGlobalSection
+EndGlobal

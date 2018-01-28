@@ -1,0 +1,57 @@
+﻿<Window xmlns:Wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"  x:Class="FiremanWpf.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+        xmlns:ViewModel="clr-namespace:FiremanWpf.ViewModel"
+        xmlns:Filtered="clr-namespace:FiremanWpf.Controls.Filtered"
+        Title="MainWindow">
+    <Window.DataContext>
+        <ViewModel:MainVM/>
+    </Window.DataContext>
+    <DockPanel LastChildFill="True">
+        <Menu Height="25" VerticalAlignment="Top" DockPanel.Dock="Top">
+            <MenuItem Header="Новая заявка"></MenuItem>
+            <MenuItem Header="Файл"></MenuItem>
+            <MenuItem Header="Вид"></MenuItem>
+            <MenuItem Header="Обновить" Command="{Binding UpdateCommand}"></MenuItem>
+        </Menu>
+        <Grid DockPanel.Dock="Right" Width="400" Row="2" Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TabControl Grid.Row="0">
+                <TabItem Header="Адреса" >
+                    <DockPanel>
+                        <ListBox ItemsSource="{Binding Repository.Addreses}"></ListBox>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Пожарные части" >
+                    <DockPanel>
+                        <ListBox ItemsSource="{Binding Repository.Departments}"></ListBox>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Гидранты" >
+                    <DockPanel>
+                        <ListBox ItemsSource="{Binding Repository.Hydrants}"></ListBox>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+            <TabControl Grid.Row="1">
+                <TabItem Header="Информация"></TabItem>
+            </TabControl>
+            
+        </Grid>
+        <TabControl>
+            <TabItem Header="Карта">
+                <gmaps:GMapControl x:Name="mapView" Loaded="mapView_Loaded" />
+            </TabItem>
+            <TabItem Header="Камеры">
+                <Wpf:VlcControl Name="_vlc"  />
+            </TabItem>
+        </TabControl>
+
+    </DockPanel>
+</Window>
