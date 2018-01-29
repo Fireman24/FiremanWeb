@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 using FiremanApi2.DataBase;
 
@@ -10,16 +6,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace FiremanApi2
 {
@@ -65,6 +57,11 @@ namespace FiremanApi2
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                                            {
+                                                HotModuleReplacement = true
+                                            });
             }
             app.UseCors("CorsPolicy");
             app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -76,7 +73,7 @@ namespace FiremanApi2
             var key = Encoding.UTF8
                     .GetBytes("401b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429090fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1");
 
-            var options = new JwtBearerOptions
+           /* var options = new JwtBearerOptions
                           {
 
                               TokenValidationParameters = {
@@ -88,9 +85,12 @@ namespace FiremanApi2
                                                               ClockSkew = TimeSpan.Zero
                                                           }
                           };
-
+                          */
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
+            app.UseStaticFiles();
+            app.UseDefaultFiles();
+
         }
     }
 }

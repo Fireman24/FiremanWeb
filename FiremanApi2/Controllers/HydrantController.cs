@@ -67,7 +67,10 @@ namespace FiremanApi2.Controllers
         public IActionResult RemoveHydrant(int id)
         {
             var hydrant = _dbContext.Hydrants.FirstOrDefault(h => h.Id == id);
-            _dbContext.Hydrants.Remove(hydrant);
+            if ( hydrant != null )
+            {
+                _dbContext.Hydrants.Remove(hydrant);
+            }
             _dbContext.SaveChanges();
             return Ok();
         }
