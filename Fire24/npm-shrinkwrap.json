@@ -439,9 +439,9 @@
       }
     },
     "bootstrap": {
-      "version": "3.3.7",
-      "from": "bootstrap@3.3.7",
-      "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-3.3.7.tgz"
+      "version": "4.0.0",
+      "from": "bootstrap@4.0.0",
+      "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.0.0.tgz"
     },
     "brace-expansion": {
       "version": "1.1.8",
