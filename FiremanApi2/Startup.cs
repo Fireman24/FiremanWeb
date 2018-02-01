@@ -58,10 +58,6 @@ namespace FiremanApi2
             {
                 app.UseDeveloperExceptionPage();
                 
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                                            {
-                                                HotModuleReplacement = true
-                                            });
             }
             app.UseCors("CorsPolicy");
             app.UseForwardedHeaders(new ForwardedHeadersOptions
