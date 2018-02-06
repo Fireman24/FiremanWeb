@@ -60,10 +60,18 @@ namespace FiremanApi2.Controllers
             return Json(_dbContext.Operators.Include(o=>o.GeoZone).Include(o=>o.Fires).FirstOrDefault(o=>o.Id==id));
         }
 
-        public IActionResult Index()
+        
+        [HttpPut("{id}")]
+        public IActionResult EditOperator(int id,[FromBody] Operator o)
         {
-            return Ok();
+            o.Id = id;
+            if (o.GeoZone != null)
+            {
+                _dbContext.GpsPoints.Update(o.GeoZone);
+            }
+            _dbContext.Operators.Update(o);
+            _dbContext.SaveChanges();
+            return Json(o);
         }
-
     }
 }
