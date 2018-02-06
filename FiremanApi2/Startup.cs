@@ -36,6 +36,7 @@ namespace FiremanApi2
             }));
             string connection = Configuration["PostgresqlConnection"];
             services.AddDbContext<FireContext>(options => options.UseNpgsql(connection));
+            
             services.AddMvcCore()
                 .AddJsonFormatters(options =>
                     {
