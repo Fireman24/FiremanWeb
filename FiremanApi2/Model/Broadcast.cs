@@ -1,7 +1,10 @@
 ﻿// //FiremanApi->FiremanApi->VideoStruct.cs
 // //andreygolubkow Андрей Голубков
 
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FiremanApi2.Model
 {
@@ -17,6 +20,7 @@ namespace FiremanApi2.Model
         {
         }
 
+        [Key()]
         public int Id { get; set; }
 
         public string Url { get; set; }

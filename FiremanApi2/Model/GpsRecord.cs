@@ -1,4 +1,7 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FiremanApi2.Model
 {
@@ -22,6 +25,7 @@ namespace FiremanApi2.Model
 
         }
 
+        [Key()]
         public int Id { get; set; }
 
         public FireCar FireCar { get; set; }

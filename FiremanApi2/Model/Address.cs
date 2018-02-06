@@ -1,9 +1,15 @@
 ﻿// //Fireman->FiremanApi->Address.cs
 // //andreygolubkow Андрей Голубков
+
+using System.ComponentModel.DataAnnotations;
+
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 namespace FiremanApi2.Model
 {
     public class Address
     {
+        [Key()]
         public int Id { get; set; }
 
         public string Label { get; set; }
