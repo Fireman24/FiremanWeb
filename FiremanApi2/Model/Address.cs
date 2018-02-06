@@ -3,24 +3,52 @@
 
 using System.ComponentModel.DataAnnotations;
 
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
 namespace FiremanApi2.Model
 {
+    /// <summary>
+    /// Адрес.
+    /// </summary>
     public class Address
     {
+        /// <summary>
+        /// Идентификатор.
+        /// </summary>
         [Key()]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Общепринятое название  объекта.
+        /// </summary>
         public string Label { get; set; }
+        
+        /// <summary>
+        /// Расположение объекта.
+        /// </summary>
+        public string Place { get; set; }
 
-        public double Lat { get; set; }
+        /// <summary>
+        /// Категория объекта.
+        /// </summary>
+        public string Category { get; set; }
 
-        public double Lon { get; set; }
+        /// <summary>
+        /// Координаты объекта.
+        /// </summary>
+        public GpsPoint GpsPoint { get; set; } = new GpsPoint();
 
-        public int Rank { get; set; }
+        /// <summary>
+        /// Ранг, при пожаре.
+        /// </summary>
+        public int Rank { get; set; } = 0;
 
+        /// <summary>
+        /// Дополнительное описание объекта.
+        /// </summary>
+        public string Description { get; set; }
+        
+        /// <summary>
+        /// Отделение пожарной части, к которой относится адрес.
+        /// </summary>
         public Department Department { get; set; }
-
     }
 }
