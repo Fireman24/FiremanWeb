@@ -46,11 +46,11 @@ namespace FiremanApi2.Controllers
         }
 
         /// <summary>
-        /// По умолчанию возвращает только активные пожары.
+        /// По умолчанию возвращает только активные выезды.
         /// </summary>
         /// <returns></returns>
         [HttpGet("")]
-        public IActionResult GetDeparturesList()
+        public IActionResult GetDeparturesList([FromQuery] bool all = false)
         {
             var deps = _dbContext.Departures
                     .Include(f => f.FireCars)
@@ -59,7 +59,7 @@ namespace FiremanApi2.Controllers
                     .Include(f => f.History)
                     .Include(f => f.Images)
                     .OrderByDescending(f => f.DateTime);
-                return Json(deps);
+                return Json(!all ? deps.Where(d=>d.Active) : deps);
         }
 
 

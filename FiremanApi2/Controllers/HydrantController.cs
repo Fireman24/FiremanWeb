@@ -40,11 +40,11 @@ namespace FiremanApi2.Controllers
         [HttpPost("")]
         public IActionResult AddHydrant([FromBody] Hydrant hydrant)
         {
-            if ( hydrant.GpsPoint != null )
+            if ( hydrant.GpsPoint == null )
             {
-                _dbContext.GpsPoints.Add(hydrant.GpsPoint);
+                hydrant.GpsPoint = new GpsPoint();
             }
-
+            _dbContext.GpsPoints.Add(hydrant.GpsPoint);
             _dbContext.Hydrants.Add(hydrant);
             _dbContext.SaveChanges();
             return Json(hydrant);
@@ -56,7 +56,7 @@ namespace FiremanApi2.Controllers
             hydrant.Id = id;
             if (hydrant.GpsPoint != null)
             {
-                _dbContext.GpsPoints.Add(hydrant.GpsPoint);
+                _dbContext.GpsPoints.Update(hydrant.GpsPoint);
             }
             _dbContext.Hydrants.Update(hydrant);
             _dbContext.SaveChanges();
@@ -66,7 +66,7 @@ namespace FiremanApi2.Controllers
         [HttpDelete("{id}")]
         public IActionResult RemoveHydrant(int id)
         {
-            var hydrant = _dbContext.Hydrants.FirstOrDefault(h => h.Id == id);
+            Hydrant hydrant = _dbContext.Hydrants.FirstOrDefault(h => h.Id == id);
             if ( hydrant != null )
             {
                 _dbContext.Hydrants.Remove(hydrant);

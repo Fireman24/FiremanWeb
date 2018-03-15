@@ -26,7 +26,7 @@ namespace FiremanApi2.Model
         
         /// <summary>
         /// Цель выезда.
-        /// </summary>
+        /// </summary>    
         [Column("intent")]
         public string Intent { get; set; }
 
