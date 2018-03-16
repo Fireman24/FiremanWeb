@@ -11,8 +11,8 @@ using System;
 namespace FiremanApi2.Migrations
 {
     [DbContext(typeof(FireContext))]
-    [Migration("20171210042118_Start")]
-    partial class Start
+    [Migration("20180316063249_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,19 +26,25 @@ namespace FiremanApi2.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Category");
+
                     b.Property<int?>("DepartmentId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("GpsPointId");
 
                     b.Property<string>("Label");
 
-                    b.Property<double>("Lat");
-
-                    b.Property<double>("Lon");
+                    b.Property<string>("Place");
 
                     b.Property<int>("Rank");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("GpsPointId");
 
                     b.ToTable("Addresses");
                 });
@@ -52,7 +58,7 @@ namespace FiremanApi2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("video_broadcast");
+                    b.ToTable("VideoStructs");
                 });
 
             modelBuilder.Entity("FiremanApi2.Model.Department", b =>
@@ -75,7 +81,7 @@ namespace FiremanApi2.Migrations
 
                     b.HasIndex("GpsPointId");
 
-                    b.ToTable("departments");
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("FiremanApi2.Model.Departure", b =>
@@ -162,7 +168,7 @@ namespace FiremanApi2.Migrations
 
                     b.HasIndex("OperatorId");
 
-                    b.ToTable("fires");
+                    b.ToTable("Fires");
                 });
 
             modelBuilder.Entity("FiremanApi2.Model.FireCar", b =>
@@ -208,7 +214,7 @@ namespace FiremanApi2.Migrations
 
                     b.HasIndex("GpsPointId");
 
-                    b.ToTable("firecars");
+                    b.ToTable("FireCars");
                 });
 
             modelBuilder.Entity("FiremanApi2.Model.GpsPoint", b =>
@@ -225,7 +231,7 @@ namespace FiremanApi2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("gps_points");
+                    b.ToTable("GpsPoints");
                 });
 
             modelBuilder.Entity("FiremanApi2.Model.GpsRecord", b =>
@@ -274,7 +280,7 @@ namespace FiremanApi2.Migrations
 
                     b.HasIndex("FireId");
 
-                    b.ToTable("History");
+                    b.ToTable("HistoryRecord");
                 });
 
             modelBuilder.Entity("FiremanApi2.Model.Hydrant", b =>
@@ -289,7 +295,13 @@ namespace FiremanApi2.Migrations
                     b.Property<string>("Description")
                         .HasColumnName("descr");
 
+                    b.Property<string>("FaulProblem")
+                        .HasColumnName("fault_problem");
+
                     b.Property<int?>("GpsPointId");
+
+                    b.Property<string>("Place")
+                        .HasColumnName("place");
 
                     b.Property<string>("Responsible")
                         .HasColumnName("responsible");
@@ -297,11 +309,14 @@ namespace FiremanApi2.Migrations
                     b.Property<DateTime>("RevisionDate")
                         .HasColumnName("revision_date");
 
+                    b.Property<string>("WaterType")
+                        .HasColumnName("water_type");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GpsPointId");
 
-                    b.ToTable("hydrants");
+                    b.ToTable("Hydrants");
                 });
 
             modelBuilder.Entity("FiremanApi2.Model.Image", b =>
@@ -353,7 +368,7 @@ namespace FiremanApi2.Migrations
 
                     b.HasIndex("GeoZoneId");
 
-                    b.ToTable("operators");
+                    b.ToTable("Operators");
                 });
 
             modelBuilder.Entity("FiremanApi2.Model.Address", b =>
@@ -361,6 +376,10 @@ namespace FiremanApi2.Migrations
                     b.HasOne("FiremanApi2.Model.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId");
+
+                    b.HasOne("FiremanApi2.Model.GpsPoint", "GpsPoint")
+                        .WithMany()
+                        .HasForeignKey("GpsPointId");
                 });
 
             modelBuilder.Entity("FiremanApi2.Model.Department", b =>

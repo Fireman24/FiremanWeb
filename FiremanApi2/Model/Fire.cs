@@ -11,7 +11,6 @@ namespace FiremanApi2.Model
     /// <summary>
     /// Пожар.
     /// </summary>
-    [Table("fires")]
     public sealed class Fire : IMapObject
     {
         public Fire()

@@ -10,7 +10,6 @@ namespace FiremanApi2.Model
     /// <summary>
     /// Пожарный гидрант.
     /// </summary>
-    [Table("hydrants")]
     public class Hydrant : IMapObject
     {
         /// <summary>

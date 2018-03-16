@@ -9,7 +9,6 @@ namespace FiremanApi2.Model
     /// <summary>
     /// Оператор центрального пульта.
     /// </summary>
-    [Table("operators")]
     public sealed class Operator
     {
         public Operator()

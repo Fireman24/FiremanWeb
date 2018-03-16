@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FiremanApi2.Model
 {
-    [Table("video_broadcast")]
     public class Broadcast
     {
         public Broadcast(string url)

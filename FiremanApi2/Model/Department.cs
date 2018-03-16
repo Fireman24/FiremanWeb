@@ -11,8 +11,6 @@ namespace FiremanApi2.Model
     /// <summary>
     /// Пожарная часть. 
     /// </summary>
-    [Table("departments")]
-    
     public sealed class Department : IMapObject 
     {
         public Department()
