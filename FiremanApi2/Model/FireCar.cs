@@ -10,7 +10,6 @@ namespace FiremanApi2.Model
     /// <summary>
     /// Пожарная машина.
     /// </summary>
-    [Table("firecars")]
     public class FireCar : IMapObject
     {
         public FireCar()

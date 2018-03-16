@@ -9,7 +9,6 @@ namespace FiremanApi2.Model
     /// <summary>
     /// Gps координаты.
     /// </summary>
-    [Table("gps_points")]
     public class GpsPoint
     {       
 

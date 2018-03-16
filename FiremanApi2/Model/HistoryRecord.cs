@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FiremanApi2.Model
 {
-    [Table("History")]
     public class HistoryRecord
     {
         [Column("id")]

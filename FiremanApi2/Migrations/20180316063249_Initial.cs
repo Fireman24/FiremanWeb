@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
+using System.Collections.Generic;
 
 namespace FiremanApi2.Migrations
 {
-    public partial class Start : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "gps_points",
+                name: "GpsPoints",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -19,11 +20,11 @@ namespace FiremanApi2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_gps_points", x => x.id);
+                    table.PrimaryKey("PK_GpsPoints", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "video_broadcast",
+                name: "VideoStructs",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -32,11 +33,11 @@ namespace FiremanApi2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_video_broadcast", x => x.Id);
+                    table.PrimaryKey("PK_VideoStructs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "departments",
+                name: "Departments",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -48,40 +49,43 @@ namespace FiremanApi2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_departments", x => x.id);
+                    table.PrimaryKey("PK_Departments", x => x.id);
                     table.ForeignKey(
-                        name: "FK_departments_gps_points_GpsPointId",
+                        name: "FK_Departments_GpsPoints_GpsPointId",
                         column: x => x.GpsPointId,
-                        principalTable: "gps_points",
+                        principalTable: "GpsPoints",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "hydrants",
+                name: "Hydrants",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     active = table.Column<bool>(nullable: false),
                     descr = table.Column<string>(nullable: true),
+                    fault_problem = table.Column<string>(nullable: true),
                     GpsPointId = table.Column<int>(nullable: true),
+                    place = table.Column<string>(nullable: true),
                     responsible = table.Column<string>(nullable: true),
-                    revision_date = table.Column<DateTime>(nullable: false)
+                    revision_date = table.Column<DateTime>(nullable: false),
+                    water_type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_hydrants", x => x.id);
+                    table.PrimaryKey("PK_Hydrants", x => x.id);
                     table.ForeignKey(
-                        name: "FK_hydrants_gps_points_GpsPointId",
+                        name: "FK_Hydrants_GpsPoints_GpsPointId",
                         column: x => x.GpsPointId,
-                        principalTable: "gps_points",
+                        principalTable: "GpsPoints",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "operators",
+                name: "Operators",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -95,11 +99,11 @@ namespace FiremanApi2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_operators", x => x.id);
+                    table.PrimaryKey("PK_Operators", x => x.id);
                     table.ForeignKey(
-                        name: "FK_operators_gps_points_GeoZoneId",
+                        name: "FK_Operators_GpsPoints_GeoZoneId",
                         column: x => x.GeoZoneId,
-                        principalTable: "gps_points",
+                        principalTable: "GpsPoints",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -110,19 +114,27 @@ namespace FiremanApi2.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Category = table.Column<string>(nullable: true),
                     DepartmentId = table.Column<int>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    GpsPointId = table.Column<int>(nullable: true),
                     Label = table.Column<string>(nullable: true),
-                    Lat = table.Column<double>(nullable: false),
-                    Lon = table.Column<double>(nullable: false),
+                    Place = table.Column<string>(nullable: true),
                     Rank = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Addresses_departments_DepartmentId",
+                        name: "FK_Addresses_Departments_DepartmentId",
                         column: x => x.DepartmentId,
-                        principalTable: "departments",
+                        principalTable: "Departments",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Addresses_GpsPoints_GpsPointId",
+                        column: x => x.GpsPointId,
+                        principalTable: "GpsPoints",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -147,21 +159,21 @@ namespace FiremanApi2.Migrations
                 {
                     table.PrimaryKey("PK_Departures", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Departures_gps_points_GpsPointId",
+                        name: "FK_Departures_GpsPoints_GpsPointId",
                         column: x => x.GpsPointId,
-                        principalTable: "gps_points",
+                        principalTable: "GpsPoints",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Departures_operators_OperatorId",
+                        name: "FK_Departures_Operators_OperatorId",
                         column: x => x.OperatorId,
-                        principalTable: "operators",
+                        principalTable: "Operators",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "fires",
+                name: "Fires",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -180,29 +192,29 @@ namespace FiremanApi2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_fires", x => x.id);
+                    table.PrimaryKey("PK_Fires", x => x.id);
                     table.ForeignKey(
-                        name: "FK_fires_departments_DepartmentId",
+                        name: "FK_Fires_Departments_DepartmentId",
                         column: x => x.DepartmentId,
-                        principalTable: "departments",
+                        principalTable: "Departments",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_fires_gps_points_GpsPointId",
+                        name: "FK_Fires_GpsPoints_GpsPointId",
                         column: x => x.GpsPointId,
-                        principalTable: "gps_points",
+                        principalTable: "GpsPoints",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_fires_operators_OperatorId",
+                        name: "FK_Fires_Operators_OperatorId",
                         column: x => x.OperatorId,
-                        principalTable: "operators",
+                        principalTable: "Operators",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "firecars",
+                name: "FireCars",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -220,41 +232,41 @@ namespace FiremanApi2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_firecars", x => x.id);
+                    table.PrimaryKey("PK_FireCars", x => x.id);
                     table.ForeignKey(
-                        name: "FK_firecars_video_broadcast_BroadcastId",
+                        name: "FK_FireCars_VideoStructs_BroadcastId",
                         column: x => x.BroadcastId,
-                        principalTable: "video_broadcast",
+                        principalTable: "VideoStructs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_firecars_departments_DepartmentId",
+                        name: "FK_FireCars_Departments_DepartmentId",
                         column: x => x.DepartmentId,
-                        principalTable: "departments",
+                        principalTable: "Departments",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_firecars_Departures_DepartureId",
+                        name: "FK_FireCars_Departures_DepartureId",
                         column: x => x.DepartureId,
                         principalTable: "Departures",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_firecars_fires_FireId",
+                        name: "FK_FireCars_Fires_FireId",
                         column: x => x.FireId,
-                        principalTable: "fires",
+                        principalTable: "Fires",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_firecars_gps_points_GpsPointId",
+                        name: "FK_FireCars_GpsPoints_GpsPointId",
                         column: x => x.GpsPointId,
-                        principalTable: "gps_points",
+                        principalTable: "GpsPoints",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "History",
+                name: "HistoryRecord",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -266,17 +278,17 @@ namespace FiremanApi2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_History", x => x.id);
+                    table.PrimaryKey("PK_HistoryRecord", x => x.id);
                     table.ForeignKey(
-                        name: "FK_History_Departures_DepartureId",
+                        name: "FK_HistoryRecord_Departures_DepartureId",
                         column: x => x.DepartureId,
                         principalTable: "Departures",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_History_fires_FireId",
+                        name: "FK_HistoryRecord_Fires_FireId",
                         column: x => x.FireId,
-                        principalTable: "fires",
+                        principalTable: "Fires",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -302,9 +314,9 @@ namespace FiremanApi2.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Images_fires_FireId",
+                        name: "FK_Images_Fires_FireId",
                         column: x => x.FireId,
-                        principalTable: "fires",
+                        principalTable: "Fires",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -324,21 +336,21 @@ namespace FiremanApi2.Migrations
                 {
                     table.PrimaryKey("PK_GpsLog", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GpsLog_firecars_FireCarId",
+                        name: "FK_GpsLog_FireCars_FireCarId",
                         column: x => x.FireCarId,
-                        principalTable: "firecars",
+                        principalTable: "FireCars",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_GpsLog_fires_FireId",
+                        name: "FK_GpsLog_Fires_FireId",
                         column: x => x.FireId,
-                        principalTable: "fires",
+                        principalTable: "Fires",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_GpsLog_gps_points_GpsPointId",
+                        name: "FK_GpsLog_GpsPoints_GpsPointId",
                         column: x => x.GpsPointId,
-                        principalTable: "gps_points",
+                        principalTable: "GpsPoints",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -349,8 +361,13 @@ namespace FiremanApi2.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_departments_GpsPointId",
-                table: "departments",
+                name: "IX_Addresses_GpsPointId",
+                table: "Addresses",
+                column: "GpsPointId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Departments_GpsPointId",
+                table: "Departments",
                 column: "GpsPointId");
 
             migrationBuilder.CreateIndex(
@@ -364,43 +381,43 @@ namespace FiremanApi2.Migrations
                 column: "OperatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_firecars_BroadcastId",
-                table: "firecars",
+                name: "IX_FireCars_BroadcastId",
+                table: "FireCars",
                 column: "BroadcastId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_firecars_DepartmentId",
-                table: "firecars",
+                name: "IX_FireCars_DepartmentId",
+                table: "FireCars",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_firecars_DepartureId",
-                table: "firecars",
+                name: "IX_FireCars_DepartureId",
+                table: "FireCars",
                 column: "DepartureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_firecars_FireId",
-                table: "firecars",
+                name: "IX_FireCars_FireId",
+                table: "FireCars",
                 column: "FireId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_firecars_GpsPointId",
-                table: "firecars",
+                name: "IX_FireCars_GpsPointId",
+                table: "FireCars",
                 column: "GpsPointId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_fires_DepartmentId",
-                table: "fires",
+                name: "IX_Fires_DepartmentId",
+                table: "Fires",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_fires_GpsPointId",
-                table: "fires",
+                name: "IX_Fires_GpsPointId",
+                table: "Fires",
                 column: "GpsPointId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_fires_OperatorId",
-                table: "fires",
+                name: "IX_Fires_OperatorId",
+                table: "Fires",
                 column: "OperatorId");
 
             migrationBuilder.CreateIndex(
@@ -419,18 +436,18 @@ namespace FiremanApi2.Migrations
                 column: "GpsPointId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_History_DepartureId",
-                table: "History",
+                name: "IX_HistoryRecord_DepartureId",
+                table: "HistoryRecord",
                 column: "DepartureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_History_FireId",
-                table: "History",
+                name: "IX_HistoryRecord_FireId",
+                table: "HistoryRecord",
                 column: "FireId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_hydrants_GpsPointId",
-                table: "hydrants",
+                name: "IX_Hydrants_GpsPointId",
+                table: "Hydrants",
                 column: "GpsPointId");
 
             migrationBuilder.CreateIndex(
@@ -444,8 +461,8 @@ namespace FiremanApi2.Migrations
                 column: "FireId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_operators_GeoZoneId",
-                table: "operators",
+                name: "IX_Operators_GeoZoneId",
+                table: "Operators",
                 column: "GeoZoneId");
         }
 
@@ -458,34 +475,34 @@ namespace FiremanApi2.Migrations
                 name: "GpsLog");
 
             migrationBuilder.DropTable(
-                name: "History");
+                name: "HistoryRecord");
 
             migrationBuilder.DropTable(
-                name: "hydrants");
+                name: "Hydrants");
 
             migrationBuilder.DropTable(
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "firecars");
+                name: "FireCars");
 
             migrationBuilder.DropTable(
-                name: "video_broadcast");
+                name: "VideoStructs");
 
             migrationBuilder.DropTable(
                 name: "Departures");
 
             migrationBuilder.DropTable(
-                name: "fires");
+                name: "Fires");
 
             migrationBuilder.DropTable(
-                name: "departments");
+                name: "Departments");
 
             migrationBuilder.DropTable(
-                name: "operators");
+                name: "Operators");
 
             migrationBuilder.DropTable(
-                name: "gps_points");
+                name: "GpsPoints");
         }
     }
 }
