@@ -40,7 +40,7 @@ namespace FiremanApi2.Controllers
         [HttpGet("{id}")]
         public IActionResult GetAddress(int id)
         {
-            var address = _dbContext.Addresses.Include(a => a.Department).FirstOrDefault(a => a.Id == id);
+            var address = _dbContext.Addresses.Include(a => a.Department).Include(a=>a.GpsPoint).FirstOrDefault(a => a.Id == id);
             return Json(address);
         }
 
@@ -71,7 +71,7 @@ namespace FiremanApi2.Controllers
         [HttpGet("")]
         public IActionResult GetAddressStartsWith([FromQuery] string value="")
         {
-            var addresses = _dbContext.Addresses.Include(a=>a.Department).Where(a => a.Label.ToLower().StartsWith(value.ToLower()));
+            var addresses = _dbContext.Addresses.Include(a=>a.Department).Include(a=>a.GpsPoint).Where(a => a.Label.ToLower().StartsWith(value.ToLower()));
             return Json(addresses);
         }
 
