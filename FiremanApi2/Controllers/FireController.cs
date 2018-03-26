@@ -84,15 +84,11 @@ namespace FiremanApi2.Controllers
             return Json(fire);
         }
 
-        [EnableCors("CorsPolicy")]
+
         [HttpPut("{id}")]
         public IActionResult EditFire(int id,[FromBody] Fire fire)
         {
             fire.Id = id;
-            if ( fire.Department != null )
-            {
-                fire.Department = _dbContext.Departments.AsNoTracking().FirstOrDefault(d => d.Id == fire.Department.Id);
-            }
             if ( fire.Operator != null )
             {
                 fire.Operator = _dbContext.Operators.AsNoTracking().FirstOrDefault(o => o.Id == fire.Operator.Id);
