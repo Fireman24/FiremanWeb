@@ -61,7 +61,7 @@ namespace FiremanApi2.Controllers
             {
                 return Json(fires);
             }
-            return Json(fires.Where(f => f.FinishDateTime == null).OrderByDescending(f => f.StartDateTime));
+            return Json(fires.Where(f=>f.Active).Where(f => f.FinishDateTime == null ).OrderByDescending(f => f.StartDateTime));
         }
 
 
