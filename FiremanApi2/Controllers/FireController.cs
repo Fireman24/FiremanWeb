@@ -68,7 +68,10 @@ namespace FiremanApi2.Controllers
         [HttpPost("")]
         public IActionResult AddFire([FromBody] Fire fire)
         {
-            fire.Department = _dbContext.Departments.FirstOrDefault(d => d.Id == fire.Department.Id);
+            if ( fire.Department != null )
+            {
+                fire.Department = _dbContext.Departments.FirstOrDefault(d => d.Id == fire.Department.Id);    
+            }
             fire.History = new List<HistoryRecord>();
             fire.FireCars = new List<FireCar>();
             fire.Images = new List<Image>();
@@ -89,6 +92,10 @@ namespace FiremanApi2.Controllers
         public IActionResult EditFire(int id,[FromBody] Fire fire)
         {
             fire.Id = id;
+            fire.FireCars = _dbContext.Fires.AsNoTracking().FirstOrDefault(f => f.Id == id)?.FireCars;
+            fire.Images = _dbContext.Fires.AsNoTracking().FirstOrDefault(f => f.Id == id)?.Images;
+            
+            
             if ( fire.Operator != null )
             {
                 fire.Operator = _dbContext.Operators.AsNoTracking().FirstOrDefault(o => o.Id == fire.Operator.Id);
@@ -98,7 +105,8 @@ namespace FiremanApi2.Controllers
                 _dbContext.GpsPoints.Update(fire.GpsPoint);
             }
 
-            //NOTE:�� �������� �������������� ������ ��������, ������� � �������� ������.
+            
+            
             _dbContext.Fires.Update(fire);
             _dbContext.SaveChanges();
 
