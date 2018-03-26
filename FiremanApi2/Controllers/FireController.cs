@@ -43,7 +43,7 @@ namespace FiremanApi2.Controllers
         }
 
         /// <summary>
-        /// По умолчанию возвращает только активные пожары.
+        /// пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
         /// </summary>
         /// <param name="all"></param>
         /// <returns></returns>
@@ -73,7 +73,7 @@ namespace FiremanApi2.Controllers
             fire.FireCars = new List<FireCar>();
             fire.Images = new List<Image>();
             //fire.Operator = _dbContext.Operators.FirstOrDefault(o => fire.Operator.Id == o.Id);
-            //TODO: Сделать определение оператора по токену
+            //TODO: пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             fire.Operator = null;
             if (fire.GpsPoint != null)
             {
@@ -91,18 +91,18 @@ namespace FiremanApi2.Controllers
             fire.Id = id;
             if ( fire.Department != null )
             {
-                fire.Department = _dbContext.Departments.FirstOrDefault(d => d.Id == fire.Department.Id);
+                fire.Department = _dbContext.Departments.AsNoTracking().FirstOrDefault(d => d.Id == fire.Department.Id);
             }
             if ( fire.Operator != null )
             {
-                fire.Operator = _dbContext.Operators.FirstOrDefault(o => o.Id == fire.Operator.Id);
+                fire.Operator = _dbContext.Operators.AsNoTracking().FirstOrDefault(o => o.Id == fire.Operator.Id);
             }
             if (fire.GpsPoint != null)
             {
                 _dbContext.GpsPoints.Update(fire.GpsPoint);
             }
 
-            //NOTE:Не работает редактирование списка вложений, истории и пожарных машины.
+            //NOTE:пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
             _dbContext.Fires.Update(fire);
             _dbContext.SaveChanges();
 
@@ -205,7 +205,7 @@ namespace FiremanApi2.Controllers
             var image = fire.Images.FirstOrDefault(i => i.Id == idImage);
             if (image == null)
             {
-                return Json("Ошибка!");
+                return Json("пїЅпїЅпїЅпїЅпїЅпїЅ!");
             }
             var path = image.Url;
             fire.Images.Remove(image);
