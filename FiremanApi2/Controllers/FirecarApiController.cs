@@ -68,6 +68,7 @@ namespace FiremanApi2.Controllers
             _dbContext.GpsPoints.Load();
             car.GpsPoint.Lat = gpsPoint.Lat;
             car.GpsPoint.Lon = gpsPoint.Lon;
+            car.LastUpdateTime = DateTime.Now;
             _dbContext.SaveChanges();
             return Ok();
         }
