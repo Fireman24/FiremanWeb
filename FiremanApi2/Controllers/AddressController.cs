@@ -1,8 +1,11 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 
 using FiremanApi2.DataBase;
 using FiremanApi2.Model;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +19,7 @@ namespace FiremanApi2.Controllers
     [Produces("application/json")]
     [Route("api2/[controller]")]
     [EnableCors("CorsPolicy")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AddressController : Controller
     {
         /// <summary>
@@ -31,7 +35,7 @@ namespace FiremanApi2.Controllers
         {
             _dbContext = context;
         }
-
+ 
         /// <summary>
         /// Получает объект по идентификатору.
         /// </summary>

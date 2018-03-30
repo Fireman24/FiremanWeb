@@ -6,6 +6,7 @@ using FiremanApi2.Adapters;
 using FiremanApi2.DataBase;
 using FiremanApi2.Model;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace FiremanApi2.Controllers
     [Produces("application/json")]
     [Route("api2/[controller]")]
     [EnableCors("CorsPolicy")]
+    [AllowAnonymous]
     public class FirecarApiController : Controller
     {
         private readonly FireContext _dbContext;
