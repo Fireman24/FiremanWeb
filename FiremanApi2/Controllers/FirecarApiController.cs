@@ -84,6 +84,7 @@ namespace FiremanApi2.Controllers
                         .ThenInclude(f => f.Images)
                         .FirstOrDefault(c => c.Id == idCar)
                         ?.Fire;
+                
                 var images = fire.Images;
                 return Json(images);
             }
@@ -113,6 +114,17 @@ namespace FiremanApi2.Controllers
                     continue;
                 }
                 geoList.Add(new GeoObject("hydrant", hydrant.GpsPoint, "Пожарный гидрант. Дата проверки: " + hydrant.RevisionDate.Date,0));
+            }
+            
+            var departures = _dbContext.Departures.Include(o => o.GpsPoint).Include(d=>d.FireCars);
+            foreach (var dep in departures)
+            {
+                if (!dep.FireCars.Contains(_dbContext.FireCars.FirstOrDefault(c=>c.Id==carId)))
+                {
+                    continue;
+                }
+                geoList.Add(new GeoObject("departure", dep.GpsPoint, "Выезд " + dep.Intent+ " "+ dep.Comments,0));
+                
             }
 
            
